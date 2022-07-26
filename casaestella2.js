@@ -6,43 +6,72 @@ let botonVaciar = document.getElementById('vaciar-carrito')
 let botonComprar = document.getElementById('comprar-carrito')
 let botonTachito = document.getElementsByClassName('boton-eliminar')
 
+
+
 /* ARRAY VACIO CARRITO*/
 let carrito = [];
 
+//LLAMO LOS PRODUCTOS DEL .JSON CON FETCH
+fetch("./productos.json")
+    .then(response => response.json())
+    .then( data => imprimir_cards(data));
+    
+
 /* IMPRIMIR ARRAY PRODUCTOS EN CARDS Y ALERTA DEL BOTON PARA AGREGAR AL CARRITO*/
-lista_productos.forEach((info) => {
+function imprimir_cards(lista_productos){
+     lista_productos.forEach((info) => {
+        let div = document.createElement('div');
+        div.classList.add('producto')
+        div.innerHTML = `
+        <img src=${info.img} class="img-produ">
+        <h5>${info.nombre}</h5>
+        <p>Precio: ${info.precio}$</p>
+        <button id="agg-producto${info.id}" class="boton-agg"><i class="fas fa-shopping-cart"></i></button>
+        `
+        contenedorProductos.appendChild(div)
+        
+        let boton = document.getElementById(`agg-producto${info.id}`)
+        
+        boton.addEventListener('click', () => {
+            agregarAlCarrito(info.id)
+            Toastify({
+                text: "Se agrego al Carrito",
+                duration: 2000,
+                destination: "https://github.com/apvarun/toastify-js",
+                newWindow: true,
+                close: true,
+                gravity: "top",
+                position: "right",
+                stopOnFocus: true, 
+                style: {
+                  background: "blue",
+                },
+                onClick: function(){} 
+              }).showToast();
+        })
+})};
 
-    let div = document.createElement('div');
-    div.classList.add('producto')
-    div.innerHTML = `
-    <img src=${info.img} class="img-produ">
-    <h5>${info.nombre}</h5>
-    <p>Precio: ${info.precio}$</p>
-    <button id="agg-producto${info.id}" class="boton-agg"><i class="fas fa-shopping-cart"></i></button>
-    `
-    contenedorProductos.appendChild(div)
 
-    let boton = document.getElementById(`agg-producto${info.id}`)
 
-    boton.addEventListener('click', () => {
-        agregarAlCarrito(info.id)
-        Toastify({
-            text: "Se agrego al Carrito",
-            duration: 2000,
-            destination: "https://github.com/apvarun/toastify-js",
-            newWindow: true,
-            close: true,
-            gravity: "top",
-            position: "right",
-            stopOnFocus: true, 
-            style: {
-              background: "blue",
-            },
-            onClick: function(){} 
-          }).showToast();
-    })
-});
+/* ANIMACIONES ANIME.JS PARA CARDS Y NAV*/
+anime({
+    targets: '.producto',
+    scale: [
+      {value: .6, easing: 'easeOutSine', duration: 500},
+      {value: 1, easing: 'easeInOutQuad', duration: 1200}
+    ],
+    delay: anime.stagger(200, {grid: [14, 5], from: 'center'})
+  });
 
+  anime({
+    targets: '.animated',
+    translateX: 2000,
+    easing: 'easeInOutExpo'
+  });
+
+
+
+  
 
 /* AGG PRODUCTO AL CARRITO SIN QUE SE REPITA*/
 const agregarAlCarrito = (prodId) => {
@@ -193,18 +222,6 @@ modalCarrito.addEventListener('click', (event) => {
 
 
 
-/* ANIMACIONES ANIME.JS PARA CARDS Y NAV*/
-  anime({
-    targets: '.producto',
-    scale: [
-      {value: .6, easing: 'easeOutSine', duration: 500},
-      {value: 1, easing: 'easeInOutQuad', duration: 1200}
-    ],
-    delay: anime.stagger(200, {grid: [14, 5], from: 'center'})
-  });
 
-  anime({
-    targets: '.animated',
-    translateX: 2000,
-    easing: 'easeInOutExpo'
-  });
+
+
