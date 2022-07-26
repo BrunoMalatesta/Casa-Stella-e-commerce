@@ -14,7 +14,7 @@ let carrito = [];
 //LLAMO LOS PRODUCTOS DEL .JSON CON FETCH
 fetch("./productos.json")
     .then(response => response.json())
-    .then( data => imprimir_cards(data));
+    .then( lista_productos => imprimir_cards(lista_productos));
     
 
 /* IMPRIMIR ARRAY PRODUCTOS EN CARDS Y ALERTA DEL BOTON PARA AGREGAR AL CARRITO*/
@@ -33,7 +33,7 @@ function imprimir_cards(lista_productos){
         let boton = document.getElementById(`agg-producto${info.id}`)
         
         boton.addEventListener('click', () => {
-            agregarAlCarrito(info.id)
+            agregarAlCarrito(info.id, lista_productos)
             Toastify({
                 text: "Se agrego al Carrito",
                 duration: 2000,
@@ -74,7 +74,7 @@ anime({
   
 
 /* AGG PRODUCTO AL CARRITO SIN QUE SE REPITA*/
-const agregarAlCarrito = (prodId) => {
+const agregarAlCarrito = (prodId , lista_productos) => {
     let agregar_producto = lista_productos.find(prod => prod.id == prodId)
     let existe = carrito.some(prod => prod.id === prodId)
 
