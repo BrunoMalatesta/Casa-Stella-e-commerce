@@ -99,6 +99,7 @@ const eliminarDelCarrito = (infoId) => {
                 const item = carrito.find((info) => info.id === infoId)
                 const indice = carrito.indexOf(item) 
                 carrito.splice(indice, 1) 
+                localStorage.removeItem('carrito', JSON.stringify(carrito))
                 actualizarCarrito()
             }
 
