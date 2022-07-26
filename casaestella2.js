@@ -33,7 +33,7 @@ function imprimir_cards(lista_productos){
         let boton = document.getElementById(`agg-producto${info.id}`)
         
         boton.addEventListener('click', () => {
-            agregarAlCarrito(info.id, lista_productos)
+            agregarAlCarrito(info.id , lista_productos)
             Toastify({
                 text: "Se agrego al Carrito",
                 duration: 2000,
@@ -218,6 +218,13 @@ contenedorModal.addEventListener('click', (event) =>{
 modalCarrito.addEventListener('click', (event) => {
     event.stopPropagation() 
 });
+
+
+
+
+
+
+
 
 
 
