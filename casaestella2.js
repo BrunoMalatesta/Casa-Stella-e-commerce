@@ -49,29 +49,25 @@ function imprimir_cards(lista_productos){
                 onClick: function(){} 
               }).showToast();
         })
+
+        /* ANIMACIONES ANIME.JS PARA CARDS Y NAV*/
+anime({
+  targets: '.producto',
+  scale: [
+    {value: .6, easing: 'easeOutSine', duration: 500},
+    {value: 1, easing: 'easeInOutQuad', duration: 1200}
+  ],
+  delay: anime.stagger(200, {grid: [14, 5], from: 'center'})
+});
+
+anime({
+  targets: '.animated',
+  translateX: 2000,
+  easing: 'easeInOutExpo'
+});
+
 })};
 
-
-
-/* ANIMACIONES ANIME.JS PARA CARDS Y NAV*/
-anime({
-    targets: '.producto',
-    scale: [
-      {value: .6, easing: 'easeOutSine', duration: 500},
-      {value: 1, easing: 'easeInOutQuad', duration: 1200}
-    ],
-    delay: anime.stagger(200, {grid: [14, 5], from: 'center'})
-  });
-
-  anime({
-    targets: '.animated',
-    translateX: 2000,
-    easing: 'easeInOutExpo'
-  });
-
-
-
-  
 
 /* AGG PRODUCTO AL CARRITO SIN QUE SE REPITA*/
 const agregarAlCarrito = (prodId , lista_productos) => {
@@ -119,13 +115,13 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 /* BOTON ELIMAR CON EL TACHITO DEL CARRITO Y ALERTAS*/
-const eliminarDelCarrito = (infoId) => {
-    const existe = carrito.some(prod => prod.id ===infoId)
+const eliminarDelCarrito = (lista_productos) => {
+    const existe = carrito.some(prod => prod.id === lista_productos)
     if(existe){
         const prod = carrito.map(prod => {
             if(prod.id === infoId){
                 prod.cantidad = 1;
-                const item = carrito.find((info) => info.id === infoId)
+                const item = carrito.find((info) => info.id === lista_productos)
                 const indice = carrito.indexOf(item) 
                 carrito.splice(indice, 1) 
                 localStorage.removeItem('carrito', JSON.stringify(carrito))
