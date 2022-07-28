@@ -7,9 +7,9 @@ let botonComprar = document.getElementById('comprar-carrito')
 let botonTachito = document.getElementsByClassName('boton-eliminar')
 
 
-
 /* ARRAY VACIO CARRITO*/
 let carrito = [];
+
 
 //LLAMO LOS PRODUCTOS DEL .JSON CON FETCH
 fetch("./productos.json")
@@ -17,7 +17,7 @@ fetch("./productos.json")
     .then( lista_productos => imprimir_cards(lista_productos));
     
 
-/* IMPRIMIR ARRAY PRODUCTOS EN CARDS Y ALERTA DEL BOTON PARA AGREGAR AL CARRITO*/
+/* IMPRIMIR  LAS CARDS/PRODUCTOS EN EL HTML Y ALERTA DEL BOTON PARA AGREGAR AL CARRITO*/
 function imprimir_cards(lista_productos){
      lista_productos.forEach((info) => {
         let div = document.createElement('div');
@@ -50,7 +50,7 @@ function imprimir_cards(lista_productos){
               }).showToast();
         })
 
-        /* ANIMACIONES ANIME.JS PARA CARDS Y NAV*/
+ /* ANIMACIONES ANIME.JS PARA CARDS Y NAV*/
 anime({
   targets: '.producto',
   scale: [
@@ -82,7 +82,7 @@ const agregarAlCarrito = (prodId , lista_productos) => {
 
 
 
-/* IMPRIMIR EL CARRITO*/
+/* IMPRIMIR EL MODAL DEL CARRITO EN EL HTML - BOTON ELIMINAR CON EL TACHITO*/
 const actualizarCarrito = () => {
     contenedorCarrito.innerHTML = ""
     carrito.forEach((info) => {
@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 })
 
-//Eliminar Productos del Carrito
+ /* ELIMINAR PRODUCTOS DEL CARRITO CON EL TACHITO*/
 const tachitoProducto = (e) => {
   let id = e.target.id
   let index = carrito.findIndex(producto => producto.id == id)
@@ -172,7 +172,6 @@ const swalWithBootstrapButtons = Swal.mixin({
         'success'
       )
     } else if (
-      /* Read more about handling dismissals below */
       result.dismiss === Swal.DismissReason.cancel
     ) {
       swalWithBootstrapButtons.fire(
