@@ -103,6 +103,12 @@ const actualizarCarrito = () => {
     
     console.log(carrito)
     precioTotal.innerText = carrito.reduce((acc, info) => acc + info.cantidad * info.precio, 0)
+
+    let botonEliminar = document.querySelectorAll(".boton-eliminar")
+
+    botonEliminar.forEach(boton => {
+        boton.addEventListener("click", tachitoProducto)
+    })
     
 };
 
@@ -114,43 +120,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 })
 
-/* BOTON ELIMAR CON EL TACHITO DEL CARRITO Y ALERTAS*/
-const eliminarDelCarrito = (lista_productos) => {
-    const existe = carrito.some(prod => prod.id === lista_productos)
-    if(existe){
-        const prod = carrito.map(prod => {
-            if(prod.id === infoId){
-                prod.cantidad = 1;
-                const item = carrito.find((info) => info.id === lista_productos)
-                const indice = carrito.indexOf(item) 
-                carrito.splice(indice, 1) 
-                localStorage.removeItem('carrito', JSON.stringify(carrito))
-                actualizarCarrito()
-            }
+//Eliminar Productos del Carrito
+const tachitoProducto = (e) => {
+  let id = e.target.id
+  let index = carrito.findIndex(producto => producto.id == id)
+  carrito.splice(index, 1)
+  localStorage.setItem('carrito', JSON.stringify(carrito))
+  actualizarCarrito(carrito)
 
-            Toastify({
-                text: "Producto Eliminado",
-                duration: 2000,
-                newWindow: true,
-                close: true,
-                gravity: "top", 
-                position: "right", 
-                stopOnFocus: true, 
-                style: {
-                  background: "red",
-                },
-                onClick: function(){} 
-              }).showToast();
-        })
-     
-    }
+        Toastify({
+          text: "Producto Eliminado",
+          duration: 2000,
+          newWindow: true,
+          close: true,
+          gravity: "top", 
+          position: "right", 
+          stopOnFocus: true, 
+          style: {
+            background: "red",
+          },
+          onClick: function(){} 
+        }).showToast();
+  }
 
-    else {
-        const item = lista_productos.find((prod) => prod.id === infoId)
-        carrito.push(item)
-    }
-    
-};
 
 
 /*BOTON SIMULAR COMPRA Y SUS ALERTAS*/
